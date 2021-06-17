@@ -1,0 +1,17 @@
+#:kivy 1.0
+<Controller>:
+    # label_wid refers to Controller class label_wid property
+    label_wid: my_custom_label
+
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 20
+
+        Button:
+            # info refers to Controller class info property
+            text: 'My controller info is {}'.format(root.info)
+            on_press: root.do_action()
+
+        Label:
+            id: my_custom_label
+            text: 'My label before button press'
