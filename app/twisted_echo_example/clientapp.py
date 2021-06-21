@@ -67,6 +67,5 @@ class TwistedClientApp(App):
 
     def print_message(self, msg):
         self.label.text += "{}\n".format(msg)
-
 if __name__ == '__main__':
     TwistedClientApp().run()
