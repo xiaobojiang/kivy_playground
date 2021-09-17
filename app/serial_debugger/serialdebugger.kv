@@ -8,7 +8,7 @@
             size: 16, 16
 
 
-Root:
+<Root>:
     console_text: console_text
     send_text: send_text
     id_commport: id_commport
@@ -58,13 +58,17 @@ Root:
                         halign: 'left'
                         height: '30dp'
                         padding_x: '5dp'
+                        size_hint_x: 0.382
                     Spinner:
                         id: id_commport
                         text: 'COM1'
-                        values: ('')
+                        values: []
+                        text_size: self.width, None
                         size_hint_y: None
                         height: '30dp'
                         on_text: root.on_commport_change(self.text)
+                        size_hint_x: 0.618
+                        halign: 'center'
 
                     Label:
                         text: 'baudrate'
@@ -73,6 +77,7 @@ Root:
                         halign: 'left'
                         height: '30dp'
                         padding_x: '5dp'
+                        size_hint_x: 0.382
                     Spinner:
                         id: id_baudrate
                         text: '9600'
@@ -80,14 +85,16 @@ Root:
                         size_hint_y: None
                         height: '30dp'
                         on_text: root.on_baudrate_change(self.text)
+                        size_hint_x: 0.618
 
                     Label:
-                        text: 'checksum'
+                        text: 'parity'
                         size_hint_y: None
                         text_size: self.size
                         halign: 'left'
                         height: '30dp'
                         padding_x: '5dp'
+                        size_hint_x: 0.382
                     Spinner:
                         id: id_checksum
                         text: 'None'
@@ -95,6 +102,7 @@ Root:
                         size_hint_y: None
                         height: '30dp'
                         on_text: root.on_checksum_change(self.text)
+                        size_hint_x: 0.618
 
                     Label:
                         text: 'stop bit'
@@ -103,6 +111,7 @@ Root:
                         halign: 'left'
                         height: '30dp'
                         padding_x: '5dp'
+                        size_hint_x: 0.382
                     Spinner:
                         id: id_stopbit
                         text: '1'
@@ -110,6 +119,7 @@ Root:
                         size_hint_y: None
                         height: '30dp'
                         on_text: root.on_stopbit_change(self.text)
+                        size_hint_x: 0.618
 
                     Label:
                         text: 'data bits'
@@ -118,6 +128,7 @@ Root:
                         halign: 'left'
                         height: '30dp'
                         padding_x: '5dp'
+                        size_hint_x: 0.382
                     Spinner:
                         id: id_databit
                         text: '8'
@@ -125,6 +136,7 @@ Root:
                         size_hint_y: None
                         height: '30dp'
                         on_text: root.on_databit_change(self.text)
+                        size_hint_x: 0.618
 
                     Label:
                         text: ''
@@ -132,15 +144,18 @@ Root:
                         text_size: self.size
                         halign: 'left'
                         height: '10dp'
+                        size_hint_x: 0.382
                     Label:
                         text: ''
                         size_hint_y: None
                         text_size: self.size
                         halign: 'left'
                         height: '10dp'
+                        size_hint_x: 0.618
 
                     Indicator:
                         id: id_indicator
+                        size_hint_x: 0.382
 
                     Button:
                         id: id_switch_serial
@@ -148,6 +163,7 @@ Root:
                         height: 30
                         text: 'Open'
                         on_release: root.switch_serial(self.text)
+                        size_hint_x: 0.618
 
 
             BoxLayout:
