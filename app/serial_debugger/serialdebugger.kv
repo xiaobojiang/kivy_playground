@@ -21,6 +21,7 @@
     id_recv_encode: id_recv_encode
     id_send_encode: id_send_encode
     id_append_linend_send: id_append_linend_send
+    id_add_timestamp: id_add_timestamp
 
     BoxLayout:
         orientation: 'horizontal'
@@ -210,6 +211,11 @@
                         height: '20dp'
                         size_hint_y: None
                         on_press: root.on_recvencode_change(self.text)
+                Button:
+                    text: 'Save to file'
+                    on_release: root.show_save()
+                    size_hint_y: None
+                    height: '30dp'
 
             BoxLayout:
                 orientation: 'vertical'
@@ -282,7 +288,7 @@
                             Rectangle:
                                 pos:self.center_x-7, self.center_y-7
                                 size:[14,14]
-
+                
 
 
         BoxLayout:
@@ -290,8 +296,37 @@
             BoxLayout:
                 size_hint_y: None
                 height: 30
-                Label:
-                    text: ''
+                GridLayout:
+                    cols: 2
+                    
+                    CheckBox:
+                        size_hint_y: None
+                        size_hint_x: 0.318
+                        height: '16dp'
+                        id: id_add_timestamp
+                        active: False
+                        on_active: root.on_add_timestamp_change(self.active)
+                        center: self.parent.center_x - 16, self.parent.center_y - 16
+                        canvas.before:
+                            Color:
+                                rgb: 1,1,0
+                            Rectangle:
+                                pos:self.center_x-8, self.center_y-8
+                                size:[16,16]
+                            Color:
+                                rgb: 0.179, 0.191, 0.191
+                            Rectangle:
+                                pos:self.center_x-7, self.center_y-7
+                                size:[14,14]
+                    Label:
+                        text: 'Add timestamp'
+                        size_hint_y: None
+                        text_size: self.size
+                        halign: 'left'
+                        height: '30dp'
+                        padding_x: '5dp'
+                        size_hint_x: 0.682
+                    
                 Button:
                     size: self.parent.width/2, 30
                     size_hint: None, None
@@ -319,3 +354,31 @@
                     text: 'Send'
                     on_release: root.send_data()
 
+<SaveDialog>:
+    text_input: text_input
+    BoxLayout:
+        size: root.size
+        pos: root.pos
+        orientation: "vertical"
+        FileChooserIconView:
+            id: filechooser
+            filters: ['*.txt']
+            rootpath: root.homepath
+            on_selection: text_input.text = self.selection[0] if self.selection else ''
+
+        TextInput:
+            id: text_input
+            size_hint_y: None
+            height: 30
+            multiline: False
+
+        BoxLayout:
+            size_hint_y: None
+            height: 30
+            Button:
+                text: "Cancel"
+                on_release: root.cancel()
+
+            Button:
+                text: "Save"
+                on_release: root.save(filechooser.path, text_input.text)
