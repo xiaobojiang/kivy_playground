@@ -1,0 +1,2 @@
+1, send area does not support chinese, and if chinese char presented, it cannot edit
+2, for upper case, if stuck, you can click clear send area 
