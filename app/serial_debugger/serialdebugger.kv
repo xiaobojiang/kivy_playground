@@ -4,8 +4,8 @@
         Color:
             rgba: self.color
         Ellipse: 
-            pos: self.center_x / 2 , self.center_y - 8
-            size: 16, 16
+            pos: self.center_x / 2 , self.center_y - dp(8)
+            size: dp(16), dp(16)
 
 
 <Root>:
@@ -25,7 +25,7 @@
 
     BoxLayout:
         orientation: 'horizontal'
-        spacing: 10
+        spacing: dp(10)
         canvas.before:
             Color:
                 rgba: (0.179, 0.191, 0.191, 1)
@@ -161,7 +161,7 @@
                     Button:
                         id: id_switch_serial
                         size_hint_y: None
-                        #height: 30
+                        height: dp(50)
                         text: 'Open'
                         on_release: root.switch_serial(self.text)
                         size_hint_x: 0.618
@@ -276,29 +276,30 @@
                         id: id_append_linend_send
                         active: False
                         on_active: root.on_append_linend_send_change(self.active)
-                        pos: self.parent.center_x - 16, self.parent.center_y - 16
+                        pos: self.parent.center_x - dp(16), self.parent.center_y - dp(16)
                         canvas.before:
                             Color:
                                 rgb: 1,1,0
                             Rectangle:
-                                pos:self.center_x-8, self.center_y-8
-                                size:[16,16]
+                                pos:self.center_x-dp(8), self.center_y-dp(8)
+                                size:[dp(16),dp(16)]
                             Color:
                                 rgb: 0.179, 0.191, 0.191
                             Rectangle:
-                                pos:self.center_x-7, self.center_y-7
-                                size:[14,14]
+                                pos:self.center_x-dp(7), self.center_y-dp(7)
+                                size:[dp(14),dp(14)]
                 
 
 
         BoxLayout:
             orientation: 'vertical'
             BoxLayout:
-                size_hint_y: 0.1
-                #height: 30
+                size_hint_y: None
+                height: '30dp'
                 GridLayout:
                     cols: 2
                     size_hint_y: None
+                    height: '30dp'
                     CheckBox:
                         size_hint_y: None
                         size_hint_x: 0.318
@@ -306,20 +307,21 @@
                         id: id_add_timestamp
                         active: False
                         on_active: root.on_add_timestamp_change(self.active)
-                        center: self.parent.center_x - 16, self.parent.center_y - 16
+                        center: self.parent.center_x - dp(16), self.parent.center_y - dp(16)
                         canvas.before:
                             Color:
                                 rgb: 1,1,0
                             Rectangle:
-                                pos:self.center_x-8, self.center_y-8
-                                size:[16,16]
+                                pos:self.center_x-dp(8), self.center_y-dp(8)
+                                size:[dp(16),dp(16)]
                             Color:
                                 rgb: 0.179, 0.191, 0.191
                             Rectangle:
-                                pos:self.center_x-7, self.center_y-7
-                                size:[14,14]
+                                pos:self.center_x-dp(7), self.center_y-dp(7)
+                                size:[dp(14),dp(14)]
                     Label:
                         text: 'Add timestamp'
+                        size_hint_x: 0.682
                         size_hint_y: None
                         text_size: self.size
                         halign: 'left'
@@ -345,8 +347,8 @@
                     text: ''
 
             BoxLayout:
-                size_hint_y: 0.1
-                height: 30
+                size_hint_y: None
+                height: '30dp'
                 Button:
                     text: 'Clear Send Area'
                     on_release: root.clear_senddata()
@@ -369,12 +371,12 @@
         TextInput:
             id: text_input
             size_hint_y: None
-            height: 30
+            height: '30dp'
             multiline: False
 
         BoxLayout:
             size_hint_y: None
-            height: 30
+            height: '30dp'
             Button:
                 text: "Cancel"
                 on_release: root.cancel()
