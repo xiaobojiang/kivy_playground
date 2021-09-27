@@ -161,7 +161,7 @@
                     Button:
                         id: id_switch_serial
                         size_hint_y: None
-                        height: 30
+                        #height: 30
                         text: 'Open'
                         on_release: root.switch_serial(self.text)
                         size_hint_x: 0.618
@@ -294,11 +294,11 @@
         BoxLayout:
             orientation: 'vertical'
             BoxLayout:
-                size_hint_y: None
-                height: 30
+                size_hint_y: 0.1
+                #height: 30
                 GridLayout:
                     cols: 2
-                    
+                    size_hint_y: None
                     CheckBox:
                         size_hint_y: None
                         size_hint_x: 0.318
@@ -328,7 +328,7 @@
                         size_hint_x: 0.682
                     
                 Button:
-                    size: self.parent.width/2, 30
+                    size: self.parent.width/2, self.parent.height
                     size_hint: None, None
                     text: 'Clear Receive Area'
                     on_release: root.clear_recvdata()
@@ -345,7 +345,7 @@
                     text: ''
 
             BoxLayout:
-                size_hint_y: None
+                size_hint_y: 0.1
                 height: 30
                 Button:
                     text: 'Clear Send Area'
