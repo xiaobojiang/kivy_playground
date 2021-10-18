@@ -252,6 +252,7 @@ class Root(FloatLayout):
 
     def update_port(self, dt): #dt is the delta time
         #update commport options
+        self.update_comm_ports()
         self.id_commport.values = self.serial_port_list
 
     def update_serialread(self, dt):
