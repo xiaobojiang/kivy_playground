@@ -59,6 +59,16 @@ def HexToByte( hexStr ):
 
     return ''.join( bytes )
 
+def HEXStringToBytesArray( hexStr:str) -> bytes:
+    bytes = []
+
+    hexStr = ''.join( hexStr.split(" ") )
+
+    for i in range(0, len(hexStr), 2):
+        bytes.append( int (hexStr[i:i+2], 16 ))
+
+    return bytes
+
 class Indicator(Widget):
     color = ListProperty([1,0,0,1])
     pass
@@ -154,7 +164,14 @@ class SerialPort():
         if self.port_opened:
             #increment at 1ms interval
             self.time_counter += 1
-            read_waiting_num = self._ser.in_waiting
+            try:
+                read_waiting_num = self._ser.in_waiting
+            except OSError:
+                self.close_port()
+                return False
+            except Exception as e:
+                print(e)
+                return False
             if read_waiting_num > 0:
                 if self.inbuff_number != read_waiting_num:
                     #keep counters updated and same
@@ -169,6 +186,7 @@ class SerialPort():
                         self.last_read_counter = self.time_counter
                         #reset the counter
                         self.inbuff_number = 0
+        return True
 
     def print_encoded_data(self, data):
         if self.add_timestamp:
@@ -184,7 +202,14 @@ class SerialPort():
                 pass
         else: # self.recv_encoding == SerialEncoding.ASCII:            
             if len(data)>0:
-                encoded_data = data.decode('utf-8')
+                try:
+                    encoded_data = data.decode('utf-8')
+                except UnicodeDecodeError:
+                    encoded_data = "wrong format to decode, show hexstring instead:\n"
+                    encoded_data += ''.join( [ "%02X " % x for x in data ] ).strip()
+                except Exception as e:
+                    print(e)
+                    pass    
                 self.console_buffer.text += encoded_data
                 if encoded_data[-1] != '\n' and encoded_data[-1] != '\r':
                     self.console_buffer.text += '\n'
@@ -196,7 +221,7 @@ class SerialPort():
         if self.port_opened:
             try:
                 if self.send_encoding == SerialEncoding.HEX:
-                    self._ser.write(HexToByte(data).encode('utf-8'))
+                    self._ser.write(HEXStringToBytesArray(data))
                 else: #self.send_encoding == SerialEncoding.ASCII:
                     self._ser.write(data.encode('utf-8'))
             except serial.serialutil.SerialTimeoutException:
@@ -256,8 +281,18 @@ class Root(FloatLayout):
         self.id_commport.values = self.serial_port_list
 
     def update_serialread(self, dt):
-        self.serial_port.print_read_task()
-        
+        if not self.serial_port.print_read_task():
+            #exception in read, close port
+            self.console_text.text += 'Port {} disconnected or has issue, close it, please retry\n'.format(self.serial_port.select_port)
+            self.id_switch_serial.text = 'Open'
+            self.id_indicator.color = [1,0,0,1]
+            self.id_commport.disabled = False
+            self.id_baudrate.disabled = False
+            self.id_checksum.disabled = False
+            self.id_stopbit.disabled = False
+            self.id_databit.disabled = False
+            self.serial_port.close_port()
+            
 
 
 
