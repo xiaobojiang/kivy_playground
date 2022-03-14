@@ -13,7 +13,7 @@ Root:
 
         BoxLayout:
             size_hint_y: None
-            height: 30
+            height: dp(30)
             Button:
                 text: 'Load'
                 on_release: root.show_load()
@@ -36,7 +36,7 @@ Root:
 
         BoxLayout:
             size_hint_y: None
-            height: 30
+            height: dp(30)
             Button:
                 text: "Cancel"
                 on_release: root.cancel()
@@ -60,12 +60,12 @@ Root:
         TextInput:
             id: text_input
             size_hint_y: None
-            height: 30
+            height: dp(30)
             multiline: False
 
         BoxLayout:
             size_hint_y: None
-            height: 30
+            height: dp(30)
             Button:
                 text: "Cancel"
                 on_release: root.cancel()
