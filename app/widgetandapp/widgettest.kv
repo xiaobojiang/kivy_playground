@@ -1,0 +1,14 @@
+#:kivy 2.0.0
+<MainLayout>:
+    padding: '10sp'
+    device_text: device_text
+    BoxLayout:
+        orientation: 'horizontal'
+        TextInput:
+            #option 1 to update text in widget
+            text: app.devices
+            #option 2
+            #text: ''
+            readonly: True
+            #option 2 to update text in widget
+            id: device_text
