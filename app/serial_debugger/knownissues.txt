@@ -1,2 +1,4 @@
 1, send area does not support chinese, and if chinese char presented, it cannot edit
+update: introduce chinese font, it can show, but still has space to improve
+
 2, for upper case, if stuck, you can click clear send area 
