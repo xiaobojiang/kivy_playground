@@ -1,0 +1,193 @@
+#:kivy 1.1.0
+#: import Factory kivy.factory.Factory
+#: import findall re.findall
+
+
+<MainLayout>
+    padding: '10sp'
+
+                    
+    MDBoxLayout:
+        spacing: '20sp'
+        orientation: 'vertical'
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint_y: None
+            spacing: '30sp'
+
+            MDFillRoundFlatButton:
+                text: 'Connect'
+                on_press: app.start_scan()
+                height: '30sp'
+                size_hint_y: None
+                size_hint_x: 0.2
+                pos_hint: {"x":.1, "top":1}
+            MDFillRoundFlatButton:
+                text: 'Flash'
+                on_press: app.start_flash()
+                height: '30sp'
+                size_hint_y: None
+                size_hint_x: 0.2
+                pos_hint: {"x":.4, "top":1}
+            MDFillRoundFlatButton:
+                id: uv_btn
+                text: 'UV OFF'
+                #on_press: app.start_flash(self.text)
+                height: '30sp'
+                size_hint_y: None
+                on_release: uv_btn.text = 'UV ON' if self.text=='UV OFF' else 'UV OFF'
+                size_hint_x: 0.2
+                pos_hint: {"x":.7, "top":1}
+        
+        
+        
+        MDLabel:
+            text: 'Mirror Light'
+            size_hint_y: None
+            halign: 'center'
+            font_style: "H3"
+            theme_text_color: "Custom"
+            text_color: 0.73, 0.34, 0.12, 0.8
+            #width: self.texture_size[0] + 20
+        
+        # FitImage:
+        #     id: bg_image
+        #     source: "./mirror.png"
+        #     height: "73sp"
+        #     width: "64sp"
+        #     #center: root.center
+        #     size_hint_y: None
+
+        MDBoxLayout:
+            orientation: 'vertical'
+            size_hint_y: 0.5
+            spacing: '5sp'
+            #pos_hint: {"x":.0, "top":1}
+            MDLabel:
+                text: 'Scene'
+                size_hint_y: None
+                height: '30sp'
+                padding_x: '5sp'
+                size_hint_x: 0.6
+                pos_hint: {"x":.2, "top":1}
+                halign: 'center'
+            MDFillRoundFlatButton:
+                text: 'Scene1'
+                size_hint_y: None
+                height: '30sp'
+                on_text: app.change_scene(self.text)
+                size_hint_x: 0.6
+                pos_hint: {"x":.2, "top":1}
+            MDFillRoundFlatButton:
+                text: 'Scene2'
+                size_hint_y: None
+                height: '30sp'
+                on_text: app.change_scene(self.text)
+                size_hint_x: 0.6
+                pos_hint: {"x":.2, "top":1}
+            MDFillRoundFlatButton:
+                text: 'Scene3'
+                size_hint_y: None
+                height: '30sp'
+                on_text: app.change_scene(self.text)
+                size_hint_x: 0.6
+                pos_hint: {"x":.2, "top":1}
+            MDFillRoundFlatButton:
+                text: 'Scene4'
+                size_hint_y: None
+                height: '30sp'
+                on_text: app.change_scene(self.text)
+                size_hint_x: 0.6
+                pos_hint: {"x":.2, "top":1}
+            MDFillRoundFlatButton:
+                text: 'Scene5'
+                size_hint_y: None
+                height: '30sp'
+                on_text: app.change_scene(self.text)
+                size_hint_x: 0.6
+                pos_hint: {"x":.2, "top":1}
+
+        MDGridLayout:
+            cols: 3
+            size_hint_y: None
+            size_y: "32sp"
+
+            # MDLabel:
+            #     id: label_1
+            #     text: 'Color Temperature'
+            #     size_hint_y: None
+            #     text_size: self.size
+            #     height: '30sp'
+            #     padding_x: '5sp'
+            #     size_hint_x: 0.382
+            #     halign: 'center'
+            FitImage:
+                source: "./warm.png"
+                height: "32sp"
+                radius: 36, 36, 0, 0
+                size_hint_x: None
+            
+            MDSlider:
+                min: 0
+                max: 100
+                step: 1
+                orientation: 'horizontal'
+                size_hint_x: 0.618
+                size_hint_y: None
+                height: '32sp'
+                on_value: app.update_cct(self.value)
+                hint: False
+                size_hit_x: None
+                halign: 'top'
+                value: app.cct
+            FitImage:
+                source: "./cold.png"
+                height: "32sp" 
+                radius: 36, 36, 0, 0
+                size_hint_x: None
+
+        MDGridLayout:
+            cols: 3
+            size_hint_y: None
+            size_y: "32sp"
+            FitImage:
+                source: "./dim.png"
+                height: "32sp"
+                radius: 36, 36, 0, 0
+                size_hint_x: None
+            MDSlider:
+                min: 0
+                max: 100
+                step: 1
+                orientation: 'horizontal'
+                size_hint_x: 0.618
+                size_hint_y: None
+                height: '32sp'
+                on_value: app.update_dimlevel(self.value)
+                hint: False
+                value: app.dim_level
+            FitImage:
+                source: "./bright.png"
+                height: "32sp"
+                radius: 36, 36, 0, 0
+                size_hint_x: None
+
+        MDFloatLayout:
+            size_hint_y: None
+            size_y: "50sp"
+            spacing: "20sp"
+            MDRoundFlatButton:
+                text: "ON"
+                font_name: './font.ttf'
+                font_size: "20sp"
+                pos_hint: {"center_x":.3,"center_y":0.5}
+                on_press: app.turn_on_light()
+
+            MDRoundFlatButton:
+                text: "OFF"
+                font_size: "20sp"
+                pos_hint: {"center_x":.7, "center_y":0.5}
+                on_press: app.turn_off_light()
+
+            
+        
