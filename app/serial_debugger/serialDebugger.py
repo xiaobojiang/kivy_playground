@@ -120,9 +120,8 @@ class SerialPort():
         self._ser.parity   = self.transfer_parity(self.checksum_bits)
         try:
             self._ser.open()
-        except serial.serialutil.SerialException:
-            self.port_opened = False
-            self._ser.close()
+        except serial.SerialException:
+            self.close_port()
             return False
         self.time_counter = 0
         self.last_read_counter = 0
@@ -166,26 +165,29 @@ class SerialPort():
             self.time_counter += 1
             try:
                 read_waiting_num = self._ser.in_waiting
+                if read_waiting_num > 0:
+                    if self.inbuff_number != read_waiting_num:
+                        #keep counters updated and same
+                        self.last_read_counter = self.time_counter
+                        self.inbuff_number = read_waiting_num
+                    else:
+                        #counters are same, check timeout condition
+                        if self.time_counter - self.last_read_counter >= self.read_timeout:
+                            #print all the data in the buff, output is bytes, need decode
+                            self.print_encoded_data(self._ser.read(read_waiting_num))
+                            #keep counters updated and same
+                            self.last_read_counter = self.time_counter
+                            #reset the counter
+                            self.inbuff_number = 0
+            except serial.SerialException:
+                self.close_port()
+                return False
             except OSError:
                 self.close_port()
                 return False
             except Exception as e:
                 print(e)
                 return False
-            if read_waiting_num > 0:
-                if self.inbuff_number != read_waiting_num:
-                    #keep counters updated and same
-                    self.last_read_counter = self.time_counter
-                    self.inbuff_number = read_waiting_num
-                else:
-                    #counters are same, check timeout condition
-                    if self.time_counter - self.last_read_counter >= self.read_timeout:
-                        #print all the data in the buff, output is bytes, need decode
-                        self.print_encoded_data(self._ser.read(read_waiting_num))
-                        #keep counters updated and same
-                        self.last_read_counter = self.time_counter
-                        #reset the counter
-                        self.inbuff_number = 0
         return True
 
     def print_encoded_data(self, data):
