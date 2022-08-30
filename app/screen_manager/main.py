@@ -16,6 +16,7 @@ Builder.load_string("""
             text: 'Quit'
 
 <SettingsScreen>:
+    ref_id: ref_id
     BoxLayout:
         Button:
             text: 'My settings button'
@@ -28,6 +29,9 @@ Builder.load_string("""
             text: app.slogan_app
         Label:
             text: root.slogan
+        Label:
+            id: ref_id
+            text: ''
 """)
 
 
@@ -38,12 +42,13 @@ class MenuScreen(Screen):
 
 class SettingsScreen(Screen):
     slogan = StringProperty('testing')
-    pass
+    ref_id = ObjectProperty(None)
+
     # slogan_id = ObjectProperty()
     #
-    # def __init__(self, *args, **kwargs):
-
-    #     self.slogan_id.text = 'work hard, play hard'
+    def __init__(self, **kwargs):
+        super(SettingsScreen, self).__init__(**kwargs)
+        self.ref_id.text = 'work hard, play hard'
 
 class TestApp(App):
     slogan_app = StringProperty('testingapp')

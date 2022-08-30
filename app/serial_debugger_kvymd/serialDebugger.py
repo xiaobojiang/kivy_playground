@@ -6,6 +6,10 @@ from kivy.uix.widget import Widget
 from kivy.clock import Clock
 from kivy.uix.popup import Popup
 
+from kivymd.app import MDApp
+from kivymd.uix.floatlayout import MDFloatLayout
+
+
 import os
 import enum
 import serial
@@ -233,14 +237,14 @@ class SerialPort():
 
 
     
-class SaveDialog(FloatLayout):
+class SaveDialog(MDFloatLayout):
     save = ObjectProperty(None)
     text_input = ObjectProperty(None)
     cancel = ObjectProperty(None)
     homepath = str(Path.home())
 
 
-class Root(FloatLayout):
+class Root(MDFloatLayout):
     console_text    = ObjectProperty(None)
     send_text       = ObjectProperty(None)
     id_commport     = ObjectProperty(None)
@@ -411,9 +415,11 @@ class Root(FloatLayout):
         self.console_text.text += ' - - - - - -  - - - - - - \n'
 
 
-class SerialDebuggerApp(App):
+class SerialDebuggerApp(MDApp):
     def build(self):
         self.icon = 'icon.png'
+        self.theme_cls.primary_palette = "Indigo"
+        self.theme_cls.theme_style = "Dark"
         root = Root()
         Clock.schedule_interval(root.update_port, 1.0)
         Clock.schedule_interval(root.update_serialread, 1.0/60)

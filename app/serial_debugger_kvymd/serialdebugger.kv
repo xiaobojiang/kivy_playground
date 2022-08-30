@@ -4,7 +4,7 @@
         Color:
             rgba: self.color
         Ellipse: 
-            pos: self.center_x / 2 , self.center_y - dp(8)
+            pos: self.center_x - dp(8) , self.center_y - dp(8)
             size: dp(16), dp(16)
 
 
@@ -23,7 +23,13 @@
     id_append_linend_send: id_append_linend_send
     id_add_timestamp: id_add_timestamp
 
-    BoxLayout:
+    MDBoxLayout:
+        canvas:
+            Color:
+                rgba: app.theme_cls.primary_light_hue #(1, 1, 1, 1)
+            Rectangle:
+                pos: self.pos
+                size: self.size
         orientation: 'horizontal'
         spacing: dp(10)
         canvas.before:
@@ -32,27 +38,25 @@
             Rectangle:
                 size: self.size
 
-        BoxLayout:
+        MDBoxLayout:
             orientation: 'vertical'
             size_hint_x: 0.3
 
-            BoxLayout:
+            MDBoxLayout:
                 orientation: 'vertical'
-                size_hint_y: 0.3
+                size_hint_y: 0.4
 
-                Label: 
+                MDLabel:
                     text: 'Serial Settings'
-                    text_size: self.size
                     halign: 'left'
-                    size_hint_y: 0.12
-                    padding_x: '2dp'
+                    size_hint_y: None
 
 
-                GridLayout:
+                MDGridLayout:
                     cols: 2
-                    #size_hint_y: 0.5
+                    size_hint_y: None
 
-                    Label:
+                    MDLabel:
                         text: 'port'
                         size_hint_y: None
                         text_size: self.size
@@ -71,7 +75,7 @@
                         size_hint_x: 0.618
                         halign: 'center'
 
-                    Label:
+                    MDLabel:
                         text: 'baudrate'
                         size_hint_y: None
                         text_size: self.size
@@ -88,7 +92,7 @@
                         on_text: root.on_baudrate_change(self.text)
                         size_hint_x: 0.618
 
-                    Label:
+                    MDLabel:
                         text: 'parity'
                         size_hint_y: None
                         text_size: self.size
@@ -105,7 +109,7 @@
                         on_text: root.on_checksum_change(self.text)
                         size_hint_x: 0.618
 
-                    Label:
+                    MDLabel:
                         text: 'stop bit'
                         size_hint_y: None
                         text_size: self.size
@@ -122,7 +126,7 @@
                         on_text: root.on_stopbit_change(self.text)
                         size_hint_x: 0.618
 
-                    Label:
+                    MDLabel:
                         text: 'data bits'
                         size_hint_y: None
                         text_size: self.size
@@ -139,14 +143,14 @@
                         on_text: root.on_databit_change(self.text)
                         size_hint_x: 0.618
 
-                    Label:
+                    MDLabel:
                         text: ''
                         size_hint_y: None
                         text_size: self.size
                         halign: 'left'
                         height: '10dp'
                         size_hint_x: 0.382
-                    Label:
+                    MDLabel:
                         text: ''
                         size_hint_y: None
                         text_size: self.size
@@ -154,42 +158,51 @@
                         height: '10dp'
                         size_hint_x: 0.618
 
-                    Indicator:
-                        id: id_indicator
+
+
+                    MDFloatLayout:
                         size_hint_x: 0.382
-
-                    Button:
-                        id: id_switch_serial
                         size_hint_y: None
-                        height: dp(50)
-                        text: 'Open'
-                        on_release: root.switch_serial(self.text)
+                        Indicator:
+                            id: id_indicator
+                            size_hint_x: 0.382
+                            size_hint_y: None
+                            pos_hint: {'center_x': 0.5,'center_y': 0.5}
+                    MDFloatLayout:
                         size_hint_x: 0.618
+                        MDFillRoundFlatButton:
+                            id: id_switch_serial
+                            height: dp(32)
+                            text: 'Open'
+                            on_release: root.switch_serial(self.text)
+                            size_hint_x: 1
+                            size_hint_y: None
+                            pos_hint: {'center_x': 0.5,'center_y': 0.5}
+                MDLabel:
+                    text: ''
 
-
-            BoxLayout:
+            MDBoxLayout:
                 orientation: 'vertical'
                 size_hint_y: 0.3
                 
-                Label:
+                MDLabel:
                     text: 'Recv Setting'
                     text_size: self.size
                     halign: 'left'
                     size_hint_y: None
                     padding_x: '2dp'
 
-                GridLayout:
+                MDGridLayout:
                     cols: 2
-                    size_hint_y: 0.5
-
-                    Label:
+                    size_hint_y: None
+                    MDLabel:
                         text: 'encoding'
                         size_hint_y: None
                         text_size: self.size
                         halign: 'left'
                         height: '30dp'
                         padding_x: '5dp'
-                    Label:
+                    MDLabel:
                         text: ''
                         size_hint_y: None
                         text_size: self.size
@@ -211,35 +224,38 @@
                         height: '20dp'
                         size_hint_y: None
                         on_press: root.on_recvencode_change(self.text)
-                Button:
+                MDLabel:
+                    text: ''
+                MDFillRoundFlatButton:
                     text: 'Save to file'
                     on_release: root.show_save()
-                    size_hint_y: None
                     height: '30dp'
+                MDLabel:
+                    text: ''
 
-            BoxLayout:
+            MDBoxLayout:
                 orientation: 'vertical'
                 size_hint_y: 0.3
                 
-                Label:
+                MDLabel:
                     text: 'Send Setting'
                     text_size: self.size
                     halign: 'left'
                     size_hint_y: None
                     padding_x: '2dp'
 
-                GridLayout:
+                MDGridLayout:
                     cols: 2
-                    size_hint_y: 0.5
+                    size_hint_y: None
 
-                    Label:
+                    MDLabel:
                         text: 'encoding'
                         size_hint_y: None
                         text_size: self.size
                         halign: 'left'
                         height: '30dp'
                         padding_x: '5dp'
-                    Label:
+                    MDLabel:
                         text: ''
                         size_hint_y: None
                         text_size: self.size
@@ -261,22 +277,26 @@
                         height: '20dp'
                         size_hint_y: None
                         on_press: root.on_sendencode_change(self.text)
-                    
-                    Label:
+
+
+
+                MDFloatLayout:
+                    size_hint_y: None
+                    MDLabel:
                         text: 'Append \\r\\n'
                         size_hint_y: None
                         text_size: self.size
-                        halign: 'left'
+                        #halign: 'left'
                         height: '30dp'
                         padding_x: '5dp'
-                    
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.5}
                     CheckBox:
                         size_hint_y: None
                         height: '16dp'
                         id: id_append_linend_send
                         active: False
                         on_active: root.on_append_linend_send_change(self.active)
-                        pos: self.parent.center_x - dp(16), self.parent.center_y - dp(16)
+                        pos_hint: {'center_x': 0.8, 'center_y': 0.5}
                         canvas.before:
                             Color:
                                 rgb: 1,1,0
@@ -288,79 +308,79 @@
                             Rectangle:
                                 pos:self.center_x-dp(7), self.center_y-dp(7)
                                 size:[dp(14),dp(14)]
-                
+                MDLabel:
+                    text: ''
 
 
-        BoxLayout:
+        MDBoxLayout:
             orientation: 'vertical'
-            BoxLayout:
+            MDFloatLayout:
                 size_hint_y: None
-                height: '30dp'
-                GridLayout:
-                    cols: 2
+                spacing: '20dp'
+                CheckBox:
                     size_hint_y: None
+                    height: '16dp'
+                    id: id_add_timestamp
+                    active: False
+                    on_active: root.on_add_timestamp_change(self.active)
+                    pos_hint: {"center_x": .2, "center_y": .5}
+                    canvas.before:
+                        Color:
+                            rgb: 1,1,0
+                        Rectangle:
+                            pos:self.center_x-dp(8), self.center_y-dp(8)
+                            size:[dp(16),dp(16)]
+                        Color:
+                            rgb: 0.179, 0.191, 0.191
+                        Rectangle:
+                            pos:self.center_x-dp(7), self.center_y-dp(7)
+                            size:[dp(14),dp(14)]
+                MDLabel:
+                    text: 'Add timestamp'
+                    size_hint_y: None
+                    #text_size: self.size
+                    pos_hint: {"center_x": .72, "center_y": .5}
+                    #halign: 'left'
                     height: '30dp'
-                    CheckBox:
-                        size_hint_y: None
-                        size_hint_x: 0.318
-                        height: '16dp'
-                        id: id_add_timestamp
-                        active: False
-                        on_active: root.on_add_timestamp_change(self.active)
-                        center: self.parent.center_x - dp(16), self.parent.center_y - dp(16)
-                        canvas.before:
-                            Color:
-                                rgb: 1,1,0
-                            Rectangle:
-                                pos:self.center_x-dp(8), self.center_y-dp(8)
-                                size:[dp(16),dp(16)]
-                            Color:
-                                rgb: 0.179, 0.191, 0.191
-                            Rectangle:
-                                pos:self.center_x-dp(7), self.center_y-dp(7)
-                                size:[dp(14),dp(14)]
-                    Label:
-                        text: 'Add timestamp'
-                        size_hint_x: 0.682
-                        size_hint_y: None
-                        text_size: self.size
-                        halign: 'left'
-                        height: '30dp'
-                        padding_x: '5dp'
-                        size_hint_x: 0.682
+                    padding_x: '5dp'
                     
-                Button:
-                    size: self.parent.width/2, self.parent.height
-                    size_hint: None, None
+                MDFillRoundFlatButton:
+                    size_hint_y: None
                     text: 'Clear Receive Area'
+                    width: self.parent.width/2
+                    height: '30dp'
                     on_release: root.clear_recvdata()
-            BoxLayout:
-                size_hint_y: 0.7
-                TextInput:
+                    pos_hint: {"center_x": .75, "center_y": .5}
+            MDBoxLayout:
+                size_hint_y: 0.65
+                MDTextFieldRect:
                     id: console_text
                     text: ''
                     readonly: True
                     font_name: './font.ttf'
-            BoxLayout:
-                size_hint_y: 0.3
-                TextInput:
+            MDBoxLayout:
+                size_hint_y: 0.25
+                MDTextFieldRect:
                     id: send_text
                     text: ''
                     font_name: './font.ttf'
 
-            BoxLayout:
+            MDFloatLayout:
                 size_hint_y: None
-                height: '30dp'
-                Button:
+                MDFillRoundFlatButton:
+                    height: '30dp'
                     text: 'Clear Send Area'
                     on_release: root.clear_senddata()
-                Button:
+                    pos_hint: {"center_x": .2, "center_y": .5}
+                MDFillRoundFlatButton:
+                    height: '30dp'
                     text: 'Send'
                     on_release: root.send_data()
+                    pos_hint: {"center_x": .8, "center_y": .5}
 
 <SaveDialog>:
     text_input: text_input
-    BoxLayout:
+    MDBoxLayout:
         size: root.size
         pos: root.pos
         orientation: "vertical"
@@ -370,20 +390,20 @@
             rootpath: root.homepath
             on_selection: text_input.text = self.selection[0] if self.selection else ''
 
-        TextInput:
+        MDTextField:
             id: text_input
             size_hint_y: None
             height: '30dp'
             multiline: False
             font_name: './font.ttf'
 
-        BoxLayout:
+        MDBoxLayout:
             size_hint_y: None
             height: '30dp'
-            Button:
+            MDFillRoundFlatButton:
                 text: "Cancel"
                 on_release: root.cancel()
 
-            Button:
+            MDFillRoundFlatButton:
                 text: "Save"
                 on_release: root.save(filechooser.path, text_input.text)
