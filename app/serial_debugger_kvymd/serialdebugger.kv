@@ -1,0 +1,389 @@
+#:kivy 1.1.0
+<Indicator>:
+    canvas:
+        Color:
+            rgba: self.color
+        Ellipse: 
+            pos: self.center_x / 2 , self.center_y - dp(8)
+            size: dp(16), dp(16)
+
+
+<Root>:
+    console_text: console_text
+    send_text: send_text
+    id_commport: id_commport
+    id_baudrate: id_baudrate
+    id_checksum: id_checksum
+    id_stopbit: id_stopbit
+    id_databit: id_databit
+    id_indicator: id_indicator
+    id_switch_serial: id_switch_serial
+    id_recv_encode: id_recv_encode
+    id_send_encode: id_send_encode
+    id_append_linend_send: id_append_linend_send
+    id_add_timestamp: id_add_timestamp
+
+    BoxLayout:
+        orientation: 'horizontal'
+        spacing: dp(10)
+        canvas.before:
+            Color:
+                rgba: (0.179, 0.191, 0.191, 1)
+            Rectangle:
+                size: self.size
+
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint_x: 0.3
+
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint_y: 0.3
+
+                Label: 
+                    text: 'Serial Settings'
+                    text_size: self.size
+                    halign: 'left'
+                    size_hint_y: 0.12
+                    padding_x: '2dp'
+
+
+                GridLayout:
+                    cols: 2
+                    #size_hint_y: 0.5
+
+                    Label:
+                        text: 'port'
+                        size_hint_y: None
+                        text_size: self.size
+                        halign: 'left'
+                        height: '30dp'
+                        padding_x: '5dp'
+                        size_hint_x: 0.382
+                    Spinner:
+                        id: id_commport
+                        text: 'COM1'
+                        values: []
+                        text_size: self.width, None
+                        size_hint_y: None
+                        height: '30dp'
+                        on_text: root.on_commport_change(self.text)
+                        size_hint_x: 0.618
+                        halign: 'center'
+
+                    Label:
+                        text: 'baudrate'
+                        size_hint_y: None
+                        text_size: self.size
+                        halign: 'left'
+                        height: '30dp'
+                        padding_x: '5dp'
+                        size_hint_x: 0.382
+                    Spinner:
+                        id: id_baudrate
+                        text: '9600'
+                        values: ('1200', '2400', '4800', '9600', '19200', '38400', '57600', '115200')
+                        size_hint_y: None
+                        height: '30dp'
+                        on_text: root.on_baudrate_change(self.text)
+                        size_hint_x: 0.618
+
+                    Label:
+                        text: 'parity'
+                        size_hint_y: None
+                        text_size: self.size
+                        halign: 'left'
+                        height: '30dp'
+                        padding_x: '5dp'
+                        size_hint_x: 0.382
+                    Spinner:
+                        id: id_checksum
+                        text: 'None'
+                        values: ('None', 'Odd', 'Even')
+                        size_hint_y: None
+                        height: '30dp'
+                        on_text: root.on_checksum_change(self.text)
+                        size_hint_x: 0.618
+
+                    Label:
+                        text: 'stop bit'
+                        size_hint_y: None
+                        text_size: self.size
+                        halign: 'left'
+                        height: '30dp'
+                        padding_x: '5dp'
+                        size_hint_x: 0.382
+                    Spinner:
+                        id: id_stopbit
+                        text: '1'
+                        values: ('1', '2')
+                        size_hint_y: None
+                        height: '30dp'
+                        on_text: root.on_stopbit_change(self.text)
+                        size_hint_x: 0.618
+
+                    Label:
+                        text: 'data bits'
+                        size_hint_y: None
+                        text_size: self.size
+                        halign: 'left'
+                        height: '30dp'
+                        padding_x: '5dp'
+                        size_hint_x: 0.382
+                    Spinner:
+                        id: id_databit
+                        text: '8'
+                        values: ('5', '6', '7', '8')
+                        size_hint_y: None
+                        height: '30dp'
+                        on_text: root.on_databit_change(self.text)
+                        size_hint_x: 0.618
+
+                    Label:
+                        text: ''
+                        size_hint_y: None
+                        text_size: self.size
+                        halign: 'left'
+                        height: '10dp'
+                        size_hint_x: 0.382
+                    Label:
+                        text: ''
+                        size_hint_y: None
+                        text_size: self.size
+                        halign: 'left'
+                        height: '10dp'
+                        size_hint_x: 0.618
+
+                    Indicator:
+                        id: id_indicator
+                        size_hint_x: 0.382
+
+                    Button:
+                        id: id_switch_serial
+                        size_hint_y: None
+                        height: dp(50)
+                        text: 'Open'
+                        on_release: root.switch_serial(self.text)
+                        size_hint_x: 0.618
+
+
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint_y: 0.3
+                
+                Label:
+                    text: 'Recv Setting'
+                    text_size: self.size
+                    halign: 'left'
+                    size_hint_y: None
+                    padding_x: '2dp'
+
+                GridLayout:
+                    cols: 2
+                    size_hint_y: 0.5
+
+                    Label:
+                        text: 'encoding'
+                        size_hint_y: None
+                        text_size: self.size
+                        halign: 'left'
+                        height: '30dp'
+                        padding_x: '5dp'
+                    Label:
+                        text: ''
+                        size_hint_y: None
+                        text_size: self.size
+                        halign: 'left'
+                        height: '30dp'
+
+                    ToggleButton:
+                        text: 'ASCII'
+                        group: 'recv_encode'
+                        id: id_recv_encode
+                        state: 'down'
+                        height: '20dp'
+                        size_hint_y: None
+                        on_press: root.on_recvencode_change(self.text)
+
+                    ToggleButton:
+                        text: 'HEX'
+                        group: 'recv_encode'
+                        height: '20dp'
+                        size_hint_y: None
+                        on_press: root.on_recvencode_change(self.text)
+                Button:
+                    text: 'Save to file'
+                    on_release: root.show_save()
+                    size_hint_y: None
+                    height: '30dp'
+
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint_y: 0.3
+                
+                Label:
+                    text: 'Send Setting'
+                    text_size: self.size
+                    halign: 'left'
+                    size_hint_y: None
+                    padding_x: '2dp'
+
+                GridLayout:
+                    cols: 2
+                    size_hint_y: 0.5
+
+                    Label:
+                        text: 'encoding'
+                        size_hint_y: None
+                        text_size: self.size
+                        halign: 'left'
+                        height: '30dp'
+                        padding_x: '5dp'
+                    Label:
+                        text: ''
+                        size_hint_y: None
+                        text_size: self.size
+                        halign: 'left'
+                        height: '30dp'
+
+                    ToggleButton:
+                        text: 'ASCII'
+                        group: 'send_encode'
+                        id: id_send_encode
+                        state: 'down'
+                        height: '20dp'
+                        size_hint_y: None
+                        on_press: root.on_sendencode_change(self.text)
+
+                    ToggleButton:
+                        text: 'HEX'
+                        group: 'send_encode'
+                        height: '20dp'
+                        size_hint_y: None
+                        on_press: root.on_sendencode_change(self.text)
+                    
+                    Label:
+                        text: 'Append \\r\\n'
+                        size_hint_y: None
+                        text_size: self.size
+                        halign: 'left'
+                        height: '30dp'
+                        padding_x: '5dp'
+                    
+                    CheckBox:
+                        size_hint_y: None
+                        height: '16dp'
+                        id: id_append_linend_send
+                        active: False
+                        on_active: root.on_append_linend_send_change(self.active)
+                        pos: self.parent.center_x - dp(16), self.parent.center_y - dp(16)
+                        canvas.before:
+                            Color:
+                                rgb: 1,1,0
+                            Rectangle:
+                                pos:self.center_x-dp(8), self.center_y-dp(8)
+                                size:[dp(16),dp(16)]
+                            Color:
+                                rgb: 0.179, 0.191, 0.191
+                            Rectangle:
+                                pos:self.center_x-dp(7), self.center_y-dp(7)
+                                size:[dp(14),dp(14)]
+                
+
+
+        BoxLayout:
+            orientation: 'vertical'
+            BoxLayout:
+                size_hint_y: None
+                height: '30dp'
+                GridLayout:
+                    cols: 2
+                    size_hint_y: None
+                    height: '30dp'
+                    CheckBox:
+                        size_hint_y: None
+                        size_hint_x: 0.318
+                        height: '16dp'
+                        id: id_add_timestamp
+                        active: False
+                        on_active: root.on_add_timestamp_change(self.active)
+                        center: self.parent.center_x - dp(16), self.parent.center_y - dp(16)
+                        canvas.before:
+                            Color:
+                                rgb: 1,1,0
+                            Rectangle:
+                                pos:self.center_x-dp(8), self.center_y-dp(8)
+                                size:[dp(16),dp(16)]
+                            Color:
+                                rgb: 0.179, 0.191, 0.191
+                            Rectangle:
+                                pos:self.center_x-dp(7), self.center_y-dp(7)
+                                size:[dp(14),dp(14)]
+                    Label:
+                        text: 'Add timestamp'
+                        size_hint_x: 0.682
+                        size_hint_y: None
+                        text_size: self.size
+                        halign: 'left'
+                        height: '30dp'
+                        padding_x: '5dp'
+                        size_hint_x: 0.682
+                    
+                Button:
+                    size: self.parent.width/2, self.parent.height
+                    size_hint: None, None
+                    text: 'Clear Receive Area'
+                    on_release: root.clear_recvdata()
+            BoxLayout:
+                size_hint_y: 0.7
+                TextInput:
+                    id: console_text
+                    text: ''
+                    readonly: True
+                    font_name: './font.ttf'
+            BoxLayout:
+                size_hint_y: 0.3
+                TextInput:
+                    id: send_text
+                    text: ''
+                    font_name: './font.ttf'
+
+            BoxLayout:
+                size_hint_y: None
+                height: '30dp'
+                Button:
+                    text: 'Clear Send Area'
+                    on_release: root.clear_senddata()
+                Button:
+                    text: 'Send'
+                    on_release: root.send_data()
+
+<SaveDialog>:
+    text_input: text_input
+    BoxLayout:
+        size: root.size
+        pos: root.pos
+        orientation: "vertical"
+        FileChooserIconView:
+            id: filechooser
+            filters: ['*.txt']
+            rootpath: root.homepath
+            on_selection: text_input.text = self.selection[0] if self.selection else ''
+
+        TextInput:
+            id: text_input
+            size_hint_y: None
+            height: '30dp'
+            multiline: False
+            font_name: './font.ttf'
+
+        BoxLayout:
+            size_hint_y: None
+            height: '30dp'
+            Button:
+                text: "Cancel"
+                on_release: root.cancel()
+
+            Button:
+                text: "Save"
+                on_release: root.save(filechooser.path, text_input.text)
