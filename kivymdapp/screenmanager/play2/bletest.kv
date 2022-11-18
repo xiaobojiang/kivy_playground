@@ -1,12 +1,14 @@
 #:kivy 1.1.0
 #: import Factory kivy.factory.Factory
 #: import findall re.findall
+#:import Clipboard kivy.core.clipboard.Clipboard
+#:import Snackbar kivymd.uix.snackbar.Snackbar
 #:import get_color_from_hex kivy.utils.get_color_from_hex
 
 
 <EntryLayout>:
-    
-                    
+
+
     MDBoxLayout:
         spacing: '10sp'
         orientation: 'vertical'
@@ -38,9 +40,9 @@
                 halign: 'center'
                 font_style: "Body2"
                 pos_hint: {"center_x":.7,"center_y":0.5}
-        
 
-        
+
+
         MDLabel:
             text: 'Scene Mode'
             font_name: './font.ttf'
@@ -57,7 +59,7 @@
             size_hint_y: None
             halign: 'center'
             font_style: "Body1"
-        
+
 
         MDBoxLayout:
             orientation: 'vertical'
@@ -164,11 +166,11 @@
                 halign: 'center'
                 font_style: "Body1"
 
-        
-        
+
+
 
 <MainLayout>:
-                    
+
     MDBoxLayout:
         spacing: '10sp'
         orientation: 'vertical'
@@ -200,9 +202,9 @@
                 halign: 'center'
                 font_style: "Body2"
                 pos_hint: {"center_x":.7,"center_y":0.5}
-        
-        
-        
+
+
+
         MDLabel:
             text: 'Scene Mode'
             font_name: './font.ttf'
@@ -219,7 +221,7 @@
             size_hint_y: None
             halign: 'center'
             font_style: "Body1"
-        
+
 
         MDBoxLayout:
             orientation: 'vertical'
@@ -330,8 +332,8 @@
 
 <ManualLayout>:
     #padding: '10sp'
-    
-                    
+
+
     MDBoxLayout:
         orientation: 'vertical'
         MDTopAppBar:
@@ -358,6 +360,7 @@
                     font_name: './font.ttf'
                     size_hint_x: 0.16
                     pos_hint: {"center_x":.08,"center_y":0.5}
+                    halign: "center"
                 MDSlider:
                     id: hcct_slider
                     min: 0
@@ -375,10 +378,10 @@
                     size_hint_x: 0.12
                     multiline: False
                     on_text: hcct_slider.value = 0 if not self.text else int(self.text)
-                    height: self.minimum_height 
+                    height: self.minimum_height
                     mode: 'rectangle'
                     pos_hint: {"center_x":.94,"center_y":0.5}
-            
+
             MDLabel:
                 text: ''
                 size_hint_x: 0.1
@@ -391,6 +394,7 @@
                     font_name: './font.ttf'
                     size_hint_x: 0.16
                     pos_hint: {"center_x":.08,"center_y":0.5}
+                    halign: "center"
                 MDSlider:
                     id: lcct_slider
                     min: 0
@@ -408,10 +412,10 @@
                     size_hint_x: 0.12
                     multiline: False
                     on_text: lcct_slider.value = 0 if not self.text else int(self.text)
-                    height: self.minimum_height 
+                    height: self.minimum_height
                     mode: 'rectangle'
                     pos_hint: {"center_x":.94,"center_y":0.5}
-                
+
             MDLabel:
                 text: ''
                 size_hint_x: 0.1
@@ -424,6 +428,7 @@
                     font_name: './font.ttf'
                     size_hint_x: 0.16
                     pos_hint: {"center_x":.08,"center_y":0.5}
+                    halign: "center"
                 MDSlider:
                     id: uv_slider
                     min: 0
@@ -441,10 +446,10 @@
                     size_hint_x: 0.12
                     multiline: False
                     on_text: uv_slider.value = 0 if not self.text else int(self.text)
-                    height: self.minimum_height 
+                    height: self.minimum_height
                     mode: 'rectangle'
                     pos_hint: {"center_x":.94,"center_y":0.5}
-            
+
             MDLabel:
                 text: ''
                 size_hint_x: 0.1
@@ -457,6 +462,7 @@
                     font_name: './font.ttf'
                     size_hint_x: 0.16
                     pos_hint: {"center_x":.08,"center_y":0.5}
+                    halign: "center"
                 MDSlider:
                     id: sup_slider
                     min: 0
@@ -474,11 +480,16 @@
                     size_hint_x: 0.12
                     multiline: False
                     on_text: sup_slider.value = 0 if not self.text else int(self.text)
-                    height: self.minimum_height 
+                    height: self.minimum_height
                     mode: 'rectangle'
                     pos_hint: {"center_x":.94,"center_y":0.5}
-        MDFloatLayout:       
-            MDTextField:
+        MDFloatLayout:
+            MDLabel:
+                text: "当前设置:"
+                font_name: './font.ttf'
+                size_hint_x: 0.618
+                pos_hint: {"center_x":0.5,"center_y":0.8}
+            MDLabel:
                 hint_text: "please copy current settings"
                 text: app.setting_text
                 font_name: './font.ttf'
@@ -488,4 +499,8 @@
                 pos_hint: {"center_x":.5,"center_y":0.5}
                 readonly: True
                 multiline: True
+            MDIconButton:
+                icon: 'content-copy'
+                pos_hint: {"center_x":.85,"center_y":0.5}
+                on_release: Clipboard.copy(app.setting_text); Snackbar(text="Copied!",duration=1).open()
 

@@ -293,6 +293,7 @@
                     CheckBox:
                         size_hint_y: None
                         height: '16dp'
+                        size_hint_x: 0.1
                         id: id_append_linend_send
                         active: False
                         on_active: root.on_append_linend_send_change(self.active)
@@ -317,24 +318,27 @@
             MDFloatLayout:
                 size_hint_y: None
                 spacing: '20dp'
-                CheckBox:
-                    size_hint_y: None
-                    height: '16dp'
-                    id: id_add_timestamp
-                    active: False
-                    on_active: root.on_add_timestamp_change(self.active)
-                    pos_hint: {"center_x": .2, "center_y": .5}
-                    canvas.before:
-                        Color:
-                            rgb: 1,1,0
-                        Rectangle:
-                            pos:self.center_x-dp(8), self.center_y-dp(8)
-                            size:[dp(16),dp(16)]
-                        Color:
-                            rgb: 0.179, 0.191, 0.191
-                        Rectangle:
-                            pos:self.center_x-dp(7), self.center_y-dp(7)
-                            size:[dp(14),dp(14)]
+                MDFloatLayout:
+                    pos_hint: {"center_x": .5, "center_y": .5}
+                    CheckBox:
+                        size_hint_y: None
+                        height: '16dp'
+                        size_hint_x: 0.1
+                        id: id_add_timestamp
+                        active: False
+                        on_active: root.on_add_timestamp_change(self.active)
+                        pos_hint: {"center_x": .2, "center_y": .5}
+                        canvas.before:
+                            Color:
+                                rgb: 1,1,0
+                            Rectangle:
+                                pos:self.center_x-dp(8), self.center_y-dp(8)
+                                size:[dp(16),dp(16)]
+                            Color:
+                                rgb: 0.179, 0.191, 0.191
+                            Rectangle:
+                                pos:self.center_x-dp(7), self.center_y-dp(7)
+                                size:[dp(14),dp(14)]
                 MDLabel:
                     text: 'Add timestamp'
                     size_hint_y: None

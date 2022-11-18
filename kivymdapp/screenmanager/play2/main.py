@@ -20,54 +20,71 @@ Config.set('kivy', 'log_level', 'debug')
 Config.set('kivy', 'log_enable', '1')
 
 
-class MainWid(ScreenManager):
+class MainWid():
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.EntryLayout = EntryLayout()
-        self.ManualLayout = None
-        self.MainLayout  = None
-        self.mainwid = Screen(name='MainLayout')
-        self.mainwid.add_widget(self.EntryLayout)
-        self.add_widget(self.mainwid)
+        self.sm = ScreenManager()
+        self.EntryScreen = EntryLayout(name='entry')
+        self.MainScreen = MainLayout(name='main')
+        self.ManualScreen = ManualLayout(name='manual')
+        self.sm.switch_to(self.EntryScreen)
+
     def switch_screen(self, mainconfirmed, tuneconfirmed=False):
         if mainconfirmed:
             if tuneconfirmed:
-                self.ManualLayout = ManualLayout()
-                if self.MainLayout:
-                    self.mainwid.remove_widget(self.MainLayout)
-                    self.MainLayout = None
-                if self.EntryLayout:
-                    self.mainwid.remove_widget(self.EntryLayout)
-                    self.EntryLayout = None
-                self.mainwid.add_widget(self.ManualLayout)
-                
+                self.sm.switch_to(self.ManualScreen)
             else:
-                self.MainLayout = MainLayout()
-                if self.EntryLayout:
-                    self.mainwid.remove_widget(self.EntryLayout)
-                    self.EntryLayout = None
-                if self.ManualLayout:
-                    self.mainwid.remove_widget(self.ManualLayout)
-                    self.ManualLayout = None
-                self.mainwid.add_widget(self.MainLayout)
+                self.sm.switch_to(self.MainScreen)
         else:
-            self.EntryLayout = EntryLayout()
-            if self.MainLayout:
-                self.mainwid.remove_widget(self.MainLayout)
-                self.MainLayout = None
-            if self.ManualLayout:
-                self.mainwid.remove_widget(self.ManualLayout)
-                self.ManualLayout = None
-            self.mainwid.add_widget(self.EntryLayout)
+            self.sm.switch_to(self.EntryScreen)
+
+    # def __init__(self, **kwargs):
+    #     super().__init__(**kwargs)
+    #     self.EntryLayout = EntryLayout()
+    #     self.ManualLayout = None
+    #     self.MainLayout  = None
+    #     self.mainwid = Screen(name='MainLayout')
+    #     self.mainwid.add_widget(self.EntryLayout)
+    #     self.add_widget(self.mainwid)
+    # def switch_screen(self, mainconfirmed, tuneconfirmed=False):
+    #     if mainconfirmed:
+    #         if tuneconfirmed:
+    #             self.ManualLayout = ManualLayout()
+    #             if self.MainLayout:
+    #                 self.mainwid.remove_widget(self.MainLayout)
+    #                 self.MainLayout = None
+    #             if self.EntryLayout:
+    #                 self.mainwid.remove_widget(self.EntryLayout)
+    #                 self.EntryLayout = None
+    #             self.mainwid.add_widget(self.ManualLayout)
+    #
+    #         else:
+    #             self.MainLayout = MainLayout()
+    #             if self.EntryLayout:
+    #                 self.mainwid.remove_widget(self.EntryLayout)
+    #                 self.EntryLayout = None
+    #             if self.ManualLayout:
+    #                 self.mainwid.remove_widget(self.ManualLayout)
+    #                 self.ManualLayout = None
+    #             self.mainwid.add_widget(self.MainLayout)
+    #     else:
+    #         self.EntryLayout = EntryLayout()
+    #         if self.MainLayout:
+    #             self.mainwid.remove_widget(self.MainLayout)
+    #             self.MainLayout = None
+    #         if self.ManualLayout:
+    #             self.mainwid.remove_widget(self.ManualLayout)
+    #             self.ManualLayout = None
+    #         self.mainwid.add_widget(self.EntryLayout)
             
 
 
-class EntryLayout(BoxLayout):
+class EntryLayout(Screen):
     pass
-class MainLayout(BoxLayout):
+class MainLayout(Screen):
     scene_label_id = ObjectProperty(None)
     pass
-class ManualLayout(BoxLayout):
+class ManualLayout(Screen):
     pass
 
 class NumberTextInput(MDTextField):
@@ -131,7 +148,7 @@ class BLETestApp(MDApp):
         'counter_read': '0d04',
         'notifications': '0d05'
     }
-
+    #works, but there is bug in manual screen, sometimes, the rectangle of input box will desappera
     def build(self):
         if self.store.exists('device'):
             self.device_address = self.store.get('device')['address']
@@ -142,7 +159,7 @@ class BLETestApp(MDApp):
         self.theme_cls.accent_palette = "Orange"
         self.theme_cls.accent_hue = "600"
         self.mainwid = MainWid()
-        return self.mainwid
+        return self.mainwid.sm
 
     def slider_value_change(self, slider_key, slider_value):
         if str(slider_key) in self.setting_dict:
