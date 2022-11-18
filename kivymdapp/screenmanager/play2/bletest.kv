@@ -1,0 +1,491 @@
+#:kivy 1.1.0
+#: import Factory kivy.factory.Factory
+#: import findall re.findall
+#:import get_color_from_hex kivy.utils.get_color_from_hex
+
+
+<EntryLayout>:
+    
+                    
+    MDBoxLayout:
+        spacing: '10sp'
+        orientation: 'vertical'
+
+
+        MDTopAppBar:
+            title: "Scene Mode"
+            #md_bg_color: app.theme_cls.primary_color
+
+        MDFloatLayout:
+
+            orientation: 'horizontal'
+            size_hint_y: None
+            size_y: '30sp'
+            spacing: '5sp'
+
+            MDFillRoundFlatButton:
+                text: '连接设备'
+                font_name: './font.ttf'
+                on_press: app.start_scan()
+                height: '30sp'
+                size_hint: 0.2, None
+                pos_hint: {"center_x":.2,"center_y":0.5}
+                md_bg_color: get_color_from_hex("#3f51b5")
+            MDLabel:
+                text:  'light ' + app.state + '...'
+                font_name: './font.ttf'
+                size_hint_y: None
+                halign: 'center'
+                font_style: "Body2"
+                pos_hint: {"center_x":.7,"center_y":0.5}
+        
+
+        
+        MDLabel:
+            text: 'Scene Mode'
+            font_name: './font.ttf'
+            size_hint_y: None
+            halign: 'center'
+            font_style: "H3"
+            theme_text_color: "Custom"
+            text_color: 0.15, 0.82, 0.96, 0.8
+            #width: self.texture_size[0] + 20
+
+        MDLabel:
+            text: ' '
+            font_name: './font.ttf'
+            size_hint_y: None
+            halign: 'center'
+            font_style: "Body1"
+        
+
+        MDBoxLayout:
+            orientation: 'vertical'
+            #size_hint_y: 0.4
+            spacing: '5sp'
+            size_y: '220sp'
+            #pos_hint: {"x":.0, "top":1}
+            MDLabel:
+                text: '场景'
+                font_name: './font.ttf'
+                height: '30sp'
+                padding_x: '5sp'
+                size_hint: 0.6, None
+                pos_hint: {"x":.2, "top":1}
+                halign: 'center'
+            MDFillRoundFlatButton:
+                text: '咖啡馆'
+                disabled: True
+                font_name: './font.ttf'
+                height: '30sp'
+                on_press: app.change_scene(self.text)
+                size_hint: 0.6, None
+                pos_hint: {"x":.2, "top":1}
+                md_bg_color: get_color_from_hex("#3f51b5")
+            MDLabel:
+                text: ''
+                font_name: './font.ttf'
+                disabled: True
+                size_hint: 0.6, None
+                height: '5sp'
+            MDFillRoundFlatButton:
+                text: '海滩'
+                disabled: True
+                font_name: './font.ttf'
+                height: '30sp'
+                on_press: app.change_scene(self.text)
+                size_hint: 0.6, None
+                pos_hint: {"x":.2, "top":1}
+                md_bg_color: get_color_from_hex("#3f51b5")
+            MDLabel:
+                text: ''
+                font_name: './font.ttf'
+                disabled: True
+                size_hint: 0.6, None
+                height: '5sp'
+            MDFillRoundFlatButton:
+                text: '阅读'
+                disabled: True
+                font_name: './font.ttf'
+                height: '30sp'
+                on_press: app.change_scene(self.text)
+                size_hint: 0.6, None
+                pos_hint: {"x":.2, "top":1}
+                md_bg_color: get_color_from_hex("#3f51b5")
+            MDLabel:
+                text: ''
+                font_name: './font.ttf'
+                disabled: True
+                size_hint: 0.6, None
+                height: '5sp'
+            MDFillRoundFlatButton:
+                text: '标准'
+                disabled: True
+                font_name: './font.ttf'
+                size_hint: 0.6, None
+                height: '30sp'
+                on_press: app.change_scene(self.text)
+                pos_hint: {"x":.2, "top":1}
+                md_bg_color: get_color_from_hex("#3f51b5")
+            MDLabel:
+                text: ''
+                font_name: './font.ttf'
+                disabled: True
+                size_hint: 0.6, None
+                height: '5sp'
+            MDFillRoundFlatButton:
+                text: '办公'
+                disabled: True
+                font_name: './font.ttf'
+                height: '30sp'
+                on_press: app.change_scene(self.text)
+                size_hint: 0.6, None
+                pos_hint: {"x":.2, "top":1}
+                md_bg_color: get_color_from_hex("#3f51b5")
+            MDLabel:
+                text: ''
+                font_name: './font.ttf'
+                disabled: True
+                size_hint: 0.6, None
+                height: '5sp'
+            MDFillRoundFlatButton:
+                text: '自定义'
+                disabled: True
+                font_name: './font.ttf'
+                height: '30sp'
+                on_press: app.change_scene(self.text)
+                size_hint: 0.6, None
+                pos_hint: {"x":.2, "top":1}
+                md_bg_color: get_color_from_hex("#3f51b5")
+            MDLabel:
+                text: '当前场景: '+app.current_scene
+                font_name: './font.ttf'
+                size_hint_y: None
+                halign: 'center'
+                font_style: "Body1"
+
+        
+        
+
+<MainLayout>:
+                    
+    MDBoxLayout:
+        spacing: '10sp'
+        orientation: 'vertical'
+
+        MDTopAppBar:
+            title: "Scene Mode"
+            right_action_items: [["tune", lambda x: app.toolbar_callback('tune'), "Fine tune your light"]]
+
+        MDFloatLayout:
+
+            orientation: 'horizontal'
+            size_hint_y: None
+            size_y: '30sp'
+            spacing: '5sp'
+
+            MDFillRoundFlatButton:
+                text: '连接设备'
+                font_name: './font.ttf'
+                on_press: app.start_scan()
+                height: '30sp'
+                size_hint: 0.2, None
+                pos_hint: {"center_x":.2,"center_y":0.5}
+                md_bg_color: get_color_from_hex("#3f51b5")
+                disabled: True
+            MDLabel:
+                text:  'light ' + app.state + '...'
+                font_name: './font.ttf'
+                size_hint_y: None
+                halign: 'center'
+                font_style: "Body2"
+                pos_hint: {"center_x":.7,"center_y":0.5}
+        
+        
+        
+        MDLabel:
+            text: 'Scene Mode'
+            font_name: './font.ttf'
+            size_hint_y: None
+            halign: 'center'
+            font_style: "H3"
+            theme_text_color: "Custom"
+            text_color: 0.15, 0.82, 0.96, 0.8
+            #width: self.texture_size[0] + 20
+
+        MDLabel:
+            text: ' '
+            font_name: './font.ttf'
+            size_hint_y: None
+            halign: 'center'
+            font_style: "Body1"
+        
+
+        MDBoxLayout:
+            orientation: 'vertical'
+            #size_hint_y: 0.4
+            spacing: '5sp'
+            size_y: '220sp'
+            #pos_hint: {"x":.0, "top":1}
+            MDLabel:
+                text: '场景'
+                font_name: './font.ttf'
+                height: '30sp'
+                padding_x: '5sp'
+                size_hint: 0.6, None
+                pos_hint: {"x":.2, "top":1}
+                halign: 'center'
+            MDFillRoundFlatButton:
+                text: '咖啡馆'
+                #disabled: True
+                font_name: './font.ttf'
+                height: '30sp'
+                on_press: app.change_scene(self.text)
+                size_hint: 0.6, None
+                pos_hint: {"x":.2, "top":1}
+                md_bg_color: get_color_from_hex("#3f51b5")
+            MDLabel:
+                text: ''
+                font_name: './font.ttf'
+                disabled: True
+                size_hint: 0.6, None
+                height: '5sp'
+            MDFillRoundFlatButton:
+                text: '海滩'
+                #disabled: True
+                font_name: './font.ttf'
+                height: '30sp'
+                on_press: app.change_scene(self.text)
+                size_hint: 0.6, None
+                pos_hint: {"x":.2, "top":1}
+                md_bg_color: get_color_from_hex("#3f51b5")
+            MDLabel:
+                text: ''
+                font_name: './font.ttf'
+                disabled: True
+                size_hint: 0.6, None
+                height: '5sp'
+            MDFillRoundFlatButton:
+                text: '阅读'
+                #disabled: True
+                font_name: './font.ttf'
+                height: '30sp'
+                on_press: app.change_scene(self.text)
+                size_hint: 0.6, None
+                pos_hint: {"x":.2, "top":1}
+                md_bg_color: get_color_from_hex("#3f51b5")
+            MDLabel:
+                text: ''
+                font_name: './font.ttf'
+                disabled: True
+                size_hint: 0.6, None
+                height: '5sp'
+            MDFillRoundFlatButton:
+                text: '标准'
+                #disabled: True
+                font_name: './font.ttf'
+                size_hint: 0.6, None
+                height: '30sp'
+                on_press: app.change_scene(self.text)
+                pos_hint: {"x":.2, "top":1}
+                md_bg_color: get_color_from_hex("#3f51b5")
+            MDLabel:
+                text: ''
+                font_name: './font.ttf'
+                disabled: True
+                size_hint: 0.6, None
+                height: '5sp'
+            MDFillRoundFlatButton:
+                text: '办公'
+                #disabled: True
+                font_name: './font.ttf'
+                height: '30sp'
+                on_press: app.change_scene(self.text)
+                size_hint: 0.6, None
+                pos_hint: {"x":.2, "top":1}
+                md_bg_color: get_color_from_hex("#3f51b5")
+            MDLabel:
+                text: ''
+                font_name: './font.ttf'
+                disabled: True
+                size_hint: 0.6, None
+                height: '5sp'
+            MDFillRoundFlatButton:
+                text: '自定义'
+                #disabled: True
+                font_name: './font.ttf'
+                height: '30sp'
+                on_press: app.change_scene(self.text)
+                size_hint: 0.6, None
+                pos_hint: {"x":.2, "top":1}
+                md_bg_color: get_color_from_hex("#3f51b5")
+            MDLabel:
+                text: '当前场景: '+app.current_scene
+                font_name: './font.ttf'
+                size_hint_y: None
+                halign: 'center'
+                font_style: "Body1"
+
+
+
+<ManualLayout>:
+    #padding: '10sp'
+    
+                    
+    MDBoxLayout:
+        orientation: 'vertical'
+        MDTopAppBar:
+            title: "Fine-Tune Mode"
+            left_action_items: [["home", lambda x: app.toolbar_callback('home'), "Go to scene mode"]]
+            #right_action_items:
+            #    [["dots-vertical", lambda x: app.callback(x), "this is the More Actions"]]
+        MDLabel:
+            text: 'Fine-Tune Mode'
+            font_name: './font.ttf'
+            #size_hint_y: 0.1
+            halign: 'center'
+            font_style: 'H3'
+
+        MDBoxLayout:
+            cols: 3
+            orientation: 'vertical'
+            pos_hint: {"center_x":.5,"center_y":0.5}
+            size_hint_y: None
+            height: root.height/2
+            MDFloatLayout:
+                MDLabel:
+                    text: '高色温'
+                    font_name: './font.ttf'
+                    size_hint_x: 0.16
+                    pos_hint: {"center_x":.08,"center_y":0.5}
+                MDSlider:
+                    id: hcct_slider
+                    min: 0
+                    max: 100
+                    step: 1
+                    orientation: 'horizontal'
+                    size_hint_x: 0.72
+                    pos_hint: {"center_x":.5,"center_y":0.5}
+                    on_value: app.slider_value_change('hcct',int(self.value))
+                    hint: False
+                    show_off: False
+
+                NumberTextInput:
+                    text: str(int(hcct_slider.value))
+                    size_hint_x: 0.12
+                    multiline: False
+                    on_text: hcct_slider.value = 0 if not self.text else int(self.text)
+                    height: self.minimum_height 
+                    mode: 'rectangle'
+                    pos_hint: {"center_x":.94,"center_y":0.5}
+            
+            MDLabel:
+                text: ''
+                size_hint_x: 0.1
+                size_hint_y: None
+                height: sp(5)
+            MDFloatLayout:
+
+                MDLabel:
+                    text: '低色温'
+                    font_name: './font.ttf'
+                    size_hint_x: 0.16
+                    pos_hint: {"center_x":.08,"center_y":0.5}
+                MDSlider:
+                    id: lcct_slider
+                    min: 0
+                    max: 100
+                    step: 1
+                    orientation: 'horizontal'
+                    size_hint_x: 0.72
+                    pos_hint: {"center_x":.5,"center_y":0.5}
+                    on_value: app.slider_value_change('lcct',int(self.value))
+                    hint: False
+                    show_off: False
+
+                NumberTextInput:
+                    text: str(int(lcct_slider.value))
+                    size_hint_x: 0.12
+                    multiline: False
+                    on_text: lcct_slider.value = 0 if not self.text else int(self.text)
+                    height: self.minimum_height 
+                    mode: 'rectangle'
+                    pos_hint: {"center_x":.94,"center_y":0.5}
+                
+            MDLabel:
+                text: ''
+                size_hint_x: 0.1
+                size_hint_y: None
+                height: sp(5)
+            MDFloatLayout:
+
+                MDLabel:
+                    text: '紫外'
+                    font_name: './font.ttf'
+                    size_hint_x: 0.16
+                    pos_hint: {"center_x":.08,"center_y":0.5}
+                MDSlider:
+                    id: uv_slider
+                    min: 0
+                    max: 100
+                    step: 1
+                    orientation: 'horizontal'
+                    size_hint_x: 0.72
+                    pos_hint: {"center_x":.5,"center_y":0.5}
+                    on_value: app.slider_value_change('uv',int(self.value))
+                    hint: False
+                    show_off: False
+
+                NumberTextInput:
+                    text: str(int(uv_slider.value))
+                    size_hint_x: 0.12
+                    multiline: False
+                    on_text: uv_slider.value = 0 if not self.text else int(self.text)
+                    height: self.minimum_height 
+                    mode: 'rectangle'
+                    pos_hint: {"center_x":.94,"center_y":0.5}
+            
+            MDLabel:
+                text: ''
+                size_hint_x: 0.1
+                size_hint_y: None
+                height: sp(5)
+            MDFloatLayout:
+
+                MDLabel:
+                    text: '补光'
+                    font_name: './font.ttf'
+                    size_hint_x: 0.16
+                    pos_hint: {"center_x":.08,"center_y":0.5}
+                MDSlider:
+                    id: sup_slider
+                    min: 0
+                    max: 100
+                    step: 1
+                    orientation: 'horizontal'
+                    size_hint_x: 0.72
+                    pos_hint: {"center_x":.5,"center_y":0.5}
+                    on_value: app.slider_value_change('sup',int(self.value))
+                    hint: False
+                    show_off: False
+
+                NumberTextInput:
+                    text: str(int(sup_slider.value))
+                    size_hint_x: 0.12
+                    multiline: False
+                    on_text: sup_slider.value = 0 if not self.text else int(self.text)
+                    height: self.minimum_height 
+                    mode: 'rectangle'
+                    pos_hint: {"center_x":.94,"center_y":0.5}
+        MDFloatLayout:       
+            MDTextField:
+                hint_text: "please copy current settings"
+                text: app.setting_text
+                font_name: './font.ttf'
+                #size_hint_y: None
+                size_hint_x: 0.618
+                height: "100sp"
+                pos_hint: {"center_x":.5,"center_y":0.5}
+                readonly: True
+                multiline: True
+
