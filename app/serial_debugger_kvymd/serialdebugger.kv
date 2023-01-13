@@ -226,10 +226,12 @@
                         on_press: root.on_recvencode_change(self.text)
                 MDLabel:
                     text: ''
-                MDFillRoundFlatButton:
-                    text: 'Save to file'
-                    on_release: root.show_save()
-                    height: '30dp'
+                MDFloatLayout:
+                    MDFillRoundFlatButton:
+                        text: 'Save to file'
+                        on_release: root.show_save()
+                        pos_hint: {'center_x': 0.5,'center_y': 0.5}
+                        height: '30dp'
                 MDLabel:
                     text: ''
 
