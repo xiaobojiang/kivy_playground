@@ -8,13 +8,25 @@ from kivy.uix.popup import Popup
 
 from kivymd.app import MDApp
 from kivymd.uix.floatlayout import MDFloatLayout
-
+from kivy.core.text import LabelBase
 
 import os
 import enum
 import serial
 import datetime
 from pathlib import Path
+import sys
+
+def resource_path(relative_path):
+    if getattr(sys, '_MEIPASS', None):
+        base_path = sys._MEIPASS
+    else:
+        base_path = os.path.abspath(".")
+    return os.path.join(base_path, relative_path)
+LabelBase.register(
+    name='CustomFont',
+    fn_regular=resource_path('font.ttf')
+)
 
 from kivy.core.window import Window
 Window.size = (1080, 600)
