@@ -28,15 +28,34 @@ Root:
         size: root.size
         pos: root.pos
         orientation: "vertical"
-        FileChooserIconView:
+        Label:
+            size_hint_y: None
+            height: dp(28)
+            text: 'Left-click PDFs one by one to select multiple files. No Shift or Cmd needed.'
+
+        FileChooserListView:
             id: filechooser
             multiselect: True
             filters: ['*.pdf']
             rootpath: root.homepath
 
+        Label:
+            size_hint_y: None
+            height: dp(24)
+            text: 'Selected: {} file(s)'.format(len(filechooser.selection))
+
         BoxLayout:
             size_hint_y: None
             height: dp(30)
+            Button:
+                text: "Add All PDFs"
+                on_release: root.load_all(filechooser.path)
+            Button:
+                text: "Remove Selected"
+                on_release: root.remove(filechooser.path, filechooser.selection)
+            Button:
+                text: "Clear Loaded List"
+                on_release: root.clear()
             Button:
                 text: "Cancel"
                 on_release: root.cancel()
@@ -55,13 +74,21 @@ Root:
             id: filechooser
             filters: ['*.pdf']
             rootpath: root.homepath
-            on_selection: text_input.text = self.selection[0] if self.selection else ''
 
         TextInput:
             id: text_input
             size_hint_y: None
             height: dp(30)
             multiline: False
+            hint_text: 'Output file name (e.g. merged.pdf)'
+            text: 'merged.pdf'
+
+        BoxLayout:
+            size_hint_y: None
+            height: dp(30)
+            Button:
+                text: "Use selected file name"
+                on_release: root.use_selected_name(filechooser.selection)
 
         BoxLayout:
             size_hint_y: None
